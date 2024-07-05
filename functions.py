@@ -5,13 +5,43 @@ from collections import Counter
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# INIT
+
+# STRUCTURE:
+# 1. DEFINITIONS
+# 2. FUNCTIONS
+#   - load_data
+#   - winrate
+#   - total_games
+#   - total_games_all
+#   - total_tournaments
+#   - fenster_winrate
+#   - nemesis
+#   - ultimate_nemesis
+#   - ranks (barplot)
+# 3. TESTS
+#   - WL
+#   - cups
+#   - testAll
+
+# DEFINITIONS
 # -------------------------------------------------------------------------
 
-def load_data():
-    spiele = pd.read_excel('Spiele.xlsx')
-    plätze = pd.read_excel('Platzierungen.xlsx')
+spiele = None
+plätze = None
+players = None
 
+# define player columns for spiele file
+player_cols_spiele  = None
+# define player columns for plätze file
+player_cols_plätze = None
+
+# -------------------------------------------------------------------------
+
+# INITIALIZE
+def load_data(df_spiele, df_plätze):
+    global spiele, plätze, players, player_cols_plätze, player_cols_spiele
+    spiele = df_spiele
+    plätze = df_plätze
     spiele.fillna(value="", inplace = True)
     plätze.fillna(value="", inplace = True)
 
@@ -27,11 +57,12 @@ def load_data():
 
     # Apply str.strip() to remove trailing spaces from each cell
     spiele = spiele.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-
+    
     # define player columns for spiele file
     player_cols_spiele  = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6']
     # define player columns for plätze file
     player_cols_plätze = ['Player 1', 'Player 2', 'Player 3']
+
 
     # define all player(names)
     players = pd.unique(spiele[player_cols_spiele].values.flatten())
@@ -40,7 +71,7 @@ def load_data():
     players = [value for value in players if value]
     # sort alphabetically
     players.sort()
-    return spiele, plätze, players, player_cols_spiele, player_cols_plätze
+    return spiele, plätze, players, player_cols_plätze, player_cols_spiele
 # -------------------------------------------------------------------------
 
 # WINRATE FUNCTION
@@ -221,6 +252,15 @@ def total_games(player):
 
 # -------------------------------------------------------------------------
 
+# TOTAL GAMES ALL FUNCTION
+def total_games_all():
+    print("total games of all players:")
+    for elem in players: 
+        print(f'{elem}: ', total_games(elem))
+    return
+
+# -------------------------------------------------------------------------
+
 # TOTAL TOURNAMENTS FUNCTION
 
 def total_tournaments(player):
@@ -229,6 +269,16 @@ def total_tournaments(player):
     df = df[df[player_cols_plätze].apply(lambda row: row.str.contains(pattern).any(), axis=1)].reset_index(drop=True)
     
     return len(df)
+
+# -------------------------------------------------------------------------
+
+# TOTAL TOURNAMENTS ALL FUNCTION
+
+def total_tournaments_all():
+    print("total tournaments of all players:")
+    for elem in players: 
+        print(f'{elem}: ', total_tournaments(elem))
+    return
 
 # -------------------------------------------------------------------------
 
@@ -290,3 +340,114 @@ def ultimate_nemesis(min_games):
     return count 
 
 # -------------------------------------------------------------------------
+
+# RANKS FUNCTION (BARPLOT)
+
+def ranks(player):
+    df = plätze.copy(deep=True)
+    pattern = rf'\b{player}\b'
+    df = df[df[player_cols_plätze].apply(lambda row: row.str.contains(pattern).any(), axis=1)].reset_index(drop=True)
+    # transform platzierungen into relative ranks
+    df['rel_rank'] = (df['Platzierung']-1)/df['Anzahl Teams']
+    
+    # Create a custom x-axis with equal spacing
+    df['custom_x'] = df.index
+    
+    # not needed right now
+    # create a col that has 'yes' in it if there were multiple tournaments on the same day, else 'no'
+    # df['same_date'] = df.groupby('Datum')['Datum'].transform(lambda x: 'yes' if len(x) > 1 else 'no')
+    
+    # create col shift
+    df['shift'] = (df['rel_rank'].diff().abs() <= 0.1).astype(int)
+    
+    # adjust figure size (to make it bigger go up in steps of 2 (eg 14,10))
+    plt.figure(figsize=(12, 10))
+    # adjust transparency with alpha
+    sns.lineplot(data=df, x='custom_x', y='rel_rank', marker='o', alpha = 0.35)
+
+    # Annotation
+    for x, rel_rank, team, shift, rank, num_teams in zip(df['custom_x'], df['rel_rank'], df['Teamname'], df['shift'], df['Platzierung'], df['Anzahl Teams']):
+        color = 'black'
+        if rank == 1:
+            color = '#fcc200' 
+        # define initial offsets (-20, below the point) and (-10, below the point)
+        offset_team = 21
+        offset_rank = 11
+        # which is to be adjusted based on the column shift
+        if shift:
+             offset_team  = -21
+             offset_rank = -11
+        else: 
+            offset_team  = 21
+            offset_rank = 11
+        plt.annotate(f'{rank}/{num_teams}', (x, rel_rank), textcoords="offset points", xytext=(0,offset_rank), ha='center', fontsize=8, color = color)
+        plt.gca().annotate(team, (x, rel_rank), textcoords="offset points", xytext=(0,offset_team), ha='center', fontsize=8, color='black', rotation=0)
+
+    plt.ylim(1.0, -0.1)  # Invert y-axis
+    plt.xlabel('Date')
+    plt.ylabel('Relative Rank: rel_rank = (platzierung -1)/anzahl_teams')
+    plt.title(f'Rankings Over Time for {player}')
+    
+    # Set the original dates as x-axis ticks
+    date_mapping = dict(zip(df['custom_x'], df['Datum']))
+    plt.xticks(df['custom_x'], [date_mapping[x].strftime('%Y-%m-%d') for x in df['custom_x']], rotation=45)
+    
+    # not exactly sure what this does
+    plt.tight_layout()
+    plt.show()
+    
+    return # df['rel_rank']
+
+# -------------------------------------------------------------------------
+
+# TESTS SECTION
+
+# -------------------------------------------------------------------------
+
+# W/L columns
+
+def WLTest():
+    # make sure either both teams lost (X Runden gecalled) or exactly one team lost and excatly one team won
+    rule = spiele.apply(lambda row: (row['WLt1'], row['WLt2']) in [(0, 1), (1, 0), (0, 0)], axis=1)
+
+    if rule.all():
+        WLtestres = 1
+    else:
+        WLtestres = 0
+    return WLtestres 
+
+# -------------------------------------------------------------------------
+
+# Cup hit columns 
+
+def cupTest():
+    check_df = spiele.copy(deep=True)
+    # insert 0 if verl is empty
+    check_df['verl'] = check_df['verl'].apply(lambda x: 0 if x == '' else x)
+    check_df['max_cups'] = 6 + 3*check_df['verl']
+    check_df.tail(20)
+
+    cuptestres = 0
+    # todo: check if max_cups == t1Becher if WLt1 == 1 and max_cups - Becher übrig = t2Becher 
+    # und umgekehrt
+    return cuptestres
+
+# -------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------
+
+# All test functions combined in one
+
+def testAll():
+    WL = WLTest()
+    cups = cupTest()
+    if WL and cups:
+        print("alle Tests bestanden :)")
+    elif not WL:
+        print("Fehler in WLTest :(")
+    elif not cups:
+        print("Fehler in cupTest :(, muss noch fertig geschrieben werden.")
+    else:
+        print("Fehler in TestALL :(")
+    
+    return
