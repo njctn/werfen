@@ -97,9 +97,17 @@ def winrate(player, *args):
     player_number = 'p0'
     cup_hit_rate = []
     cup_hit_rate_output = -1
+    verl = 0
     
     for i in range(len(df)):
         partner1, partner2 = '', ''
+        # reset max_cups for each loop iteration / game
+        max_cups = 6
+        
+        # set the overtime variable
+        if df.loc[i, 'verl']:
+            verl = df.loc[i, 'verl']
+            max_cups = max_cups + 3 * verl
         
         if df.loc[i, 'p1'] == player:
             player_number = 'p1'
@@ -175,9 +183,10 @@ def winrate(player, *args):
         
         # handle CUP_HIT_RATE
         player_cups_col = f'{player_number}Becher'
+        # not needed here:
         team_cups_col = f't{team}Becher'
         num_players = -1
-        if df.loc[i, player_cups_col] and [i, team_cups_col]:
+        if df.loc[i, player_cups_col]:
             if partner1 and partner2:
                 num_players = 3
             elif partner1:
@@ -186,7 +195,7 @@ def winrate(player, *args):
                 print("something wrong with cup_hit_rate and partners")
             else:
                 num_players = 1
-            hit_rate = df.loc[i, player_cups_col] / df.loc[i, team_cups_col] * max((num_players /2), 1)
+            hit_rate = df.loc[i, player_cups_col] / max_cups * max((num_players /2), 1)
             cup_hit_rate.append(hit_rate)
        
     
@@ -241,6 +250,18 @@ def winrate(player, *args):
 
 # -------------------------------------------------------------------------
 
+# WINRATE ALL (min number of games)
+def winrate_all(min_games):
+    selected_players = []
+    for elem in players:
+        if total_games(elem) >= min_games:
+            selected_players.append(elem)
+    for player in selected_players:
+        _ = winrate(player) 
+    return 
+
+# -------------------------------------------------------------------------
+
 # TOTAL GAMES FUNCTION
 
 def total_games(player):
@@ -277,7 +298,7 @@ def total_tournaments(player):
 def total_tournaments_all():
     print("total tournaments of all players:")
     for elem in players: 
-        print(f'{elem}: ', total_tournaments(elem))
+        print(f'{elem}:', total_tournaments(elem))
     return
 
 # -------------------------------------------------------------------------
