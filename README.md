@@ -53,5 +53,7 @@ ranks('Name')
 ``` 
 <span style="color:orange">Name</span> must exactly match (including captilization) one of the names in the array players 
 
-<span style="color:green">Function Output:</span> plot of ranks in tournatment of 'Name's team over time
+<span style="color:green">Function Output:</span> plot of ranks in tournatment of 'Name's team over time, example:
+
+![ranks_example](ranks_example.jpg)
 
