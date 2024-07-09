@@ -77,7 +77,7 @@ def load_data(df_spiele, df_plätze):
 # WINRATE FUNCTION
 
 # *args adds as many optional arguments as desired
-def winrate(player, *args):
+def winrate(player: str, *args) -> list:
     if args:
         # output should not be printed
         output = 0
@@ -251,7 +251,7 @@ def winrate(player, *args):
 # -------------------------------------------------------------------------
 
 # WINRATE ALL (min number of games)
-def winrate_all(min_games):
+def winrate_all(min_games: int):
     selected_players = []
     for elem in players:
         if total_games(elem) >= min_games:
@@ -264,7 +264,7 @@ def winrate_all(min_games):
 
 # TOTAL GAMES FUNCTION
 
-def total_games(player):
+def total_games(player: str) -> int:
     df = spiele.copy(deep=True)
     pattern = rf'\b{player}\b'
     df = df[df[player_cols_spiele].apply(lambda row: row.str.contains(pattern).any(), axis=1)].reset_index(drop=True)
@@ -276,6 +276,7 @@ def total_games(player):
 # TOTAL GAMES ALL FUNCTION
 def total_games_all():
     print("total games of all players:")
+    #games_all = {}
     for elem in players: 
         print(f'{elem}: ', total_games(elem))
     return
@@ -284,7 +285,7 @@ def total_games_all():
 
 # TOTAL TOURNAMENTS FUNCTION
 
-def total_tournaments(player):
+def total_tournaments(player: str) -> int:
     df = plätze.copy(deep=True)
     pattern = rf'\b{player}\b'
     df = df[df[player_cols_plätze].apply(lambda row: row.str.contains(pattern).any(), axis=1)].reset_index(drop=True)
@@ -305,7 +306,7 @@ def total_tournaments_all():
 
 # FENSTER_WINRATE FUNCTION
 
-def fenster_winrate():
+def fenster_winrate() -> float:
     df = spiele.copy(deep=True)
     df = df[df['fenster'] == 1]
     # since we made sure that team 1 is always fenster, we can just sum up the wins of team1 and divide by the total number of games which have a value in fenster
@@ -318,7 +319,7 @@ def fenster_winrate():
 
 # min_games refers to the minimuim number of games AGAINST a specific opponent
 # *args adds as many optional arguments as desired
-def nemesis(player, min_games, *args):
+def nemesis(player: str, min_games: int, *args):
     if args:
         # output should not be printed
         output = 0
@@ -348,7 +349,7 @@ def nemesis(player, min_games, *args):
 
 # ULTIMATE NEMESIS FUNCTION
 
-def ultimate_nemesis(min_games):
+def ultimate_nemesis(min_games: int):
     min_games = min_games
     count = {elem: 0 for elem in players}
     for elem in players:
@@ -362,9 +363,9 @@ def ultimate_nemesis(min_games):
 
 # -------------------------------------------------------------------------
 
-# RANKS FUNCTION (BARPLOT)
+# RANKS FUNCTION (LINEPLOT)
 
-def ranks(player):
+def ranks(player: str):
     df = plätze.copy(deep=True)
     pattern = rf'\b{player}\b'
     df = df[df[player_cols_plätze].apply(lambda row: row.str.contains(pattern).any(), axis=1)].reset_index(drop=True)
