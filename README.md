@@ -28,7 +28,7 @@ total_games('Name')
 ``` 
 ${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
 
-${\color{lightgreen}Function \space Output:}$ total number of games played by 'Name' (int)
+${\color{lightgreen} \texttt{Function Output:}}$ total number of games played by 'Name' (int)
 
 ---
 
