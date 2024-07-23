@@ -57,10 +57,9 @@ ${\color{lightgreen} \texttt{Function Output:}}$ plot of ranks in tournatment of
 
 ![ranks_example](ranks_example.jpg)
 
+Todo: 
+- winrate_all
+- total_games_all
+- nemesis
+- ultimate_nemesis
 
-#   - total_games_all
-#   - total_tournaments
-#   - fenster_winrate
-#   - nemesis
-#   - ultimate_nemesis
-#   - ranks (barplot)
