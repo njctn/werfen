@@ -15,7 +15,7 @@ winrate_name = winrate('Name')
 ```python
 players
 ``` 
-${\color{lightgreen}Function \space Output:}$ (here: winrate_name) list containing:
+${\texttt\color{lightgreen}Function \space Output:}$ (here: winrate_name) list containing:
 - dataframe containting teampartners, number of games and wins with them, as well as the resulting winrate playing together
 - dataframe containting opponents, number of games and wins against them, as well as the resulting winrate against them
 - overall winrate of player (float)
