@@ -2,7 +2,7 @@
 
 in stats.ipynb run the code blocks in the sections IMPORTS and INIT
 
-Use the functions (with different names possibly) in the section STATS or make use of the following functions:
+Use the functions (with different input names if you'd like) in the section STATS or make use of the following functions:
 
 ## Use of Functions
 
