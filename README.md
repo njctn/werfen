@@ -10,7 +10,7 @@ Use the functions (with different names possibly) in the section STATS or make u
 winrate_name = winrate('Name')
 ``` 
 
-<span style="color:orange">Name</span> must exactly match (including captilization) one of the names in the array players which can be accessed by
+${\color{lightblue}Name}$ must exactly match (including captilization) one of the names in the array players which can be accessed by
 
 ```python
 players
