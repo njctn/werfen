@@ -15,7 +15,7 @@ ${\color{lightblue}Name}$ must exactly match (including captilization) one of th
 ```python
 players
 ``` 
-${\color{lightgreen} \texttt{Function Output:}$ (here: winrate_name) list containing:
+${\color{lightgreen} \texttt{Function Output:}}$ (here: winrate_name) list containing:
 - dataframe containting teampartners, number of games and wins with them, as well as the resulting winrate playing together
 - dataframe containting opponents, number of games and wins against them, as well as the resulting winrate against them
 - overall winrate of player (float)
