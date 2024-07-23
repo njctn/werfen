@@ -15,7 +15,7 @@ winrate_name = winrate('Name')
 ```python
 players
 ``` 
-<span style="color:green">Function Output (here: winrate_name):</span> list containing:
+${\color{lightgreen}Function \space Output:}$ (here: winrate_name) list containing:
 - dataframe containting teampartners, number of games and wins with them, as well as the resulting winrate playing together
 - dataframe containting opponents, number of games and wins against them, as well as the resulting winrate against them
 - overall winrate of player (float)
@@ -26,34 +26,41 @@ players
 ```python
 total_games('Name')
 ``` 
-<span style="color:orange">Name</span> must exactly match (including captilization) one of the names in the array players 
+${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
 
-<span style="color:green">Function Output:</span> total number of games played by 'Name' (int)
+${\color{lightgreen}Function \space Output:}$ total number of games played by 'Name' (int)
 
 ---
 
 ```python
 total_tournaments('Name')
 ``` 
-<span style="color:orange">Name</span> must exactly match (including captilization) one of the names in the array players 
+${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
 
-<span style="color:green">Function Output:</span> total number of tournaments played by 'Name' (int)
+${\color{lightgreen}Function \space Output:}$ total number of tournaments played by 'Name' (int)
 
 ---
 
 ```python
 fenster_winrate()
 ``` 
-<span style="color:green">Function Output:</span> overall winrate on the window side (float)
+${\color{lightgreen}Function \space Output:}$ overall winrate on the window side (float)
 
 ---
 
 ```python
 ranks('Name')
 ``` 
-<span style="color:orange">Name</span> must exactly match (including captilization) one of the names in the array players 
+${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
 
-<span style="color:green">Function Output:</span> plot of ranks in tournatment of 'Name's team over time, example:
+${\color{lightgreen}Function \space Output:}$ plot of ranks in tournatment of 'Name's team over time, example:
 
 ![ranks_example](ranks_example.jpg)
 
+
+#   - total_games_all
+#   - total_tournaments
+#   - fenster_winrate
+#   - nemesis
+#   - ultimate_nemesis
+#   - ranks (barplot)
