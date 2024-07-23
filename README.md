@@ -10,7 +10,7 @@ Use the functions (with different names possibly) in the section STATS or make u
 winrate_name = winrate('Name')
 ``` 
 
-${\color{lightblue}Name}$ must exactly match (including captilization) one of the names in the array players which can be accessed by
+${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players which can be accessed by
 
 ```python
 players
@@ -26,7 +26,7 @@ ${\color{lightgreen} \texttt{Function Output:}}$ (here: winrate_name) list conta
 ```python
 total_games('Name')
 ``` 
-${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
 
 ${\color{lightgreen}Function \space Output:}$ total number of games played by 'Name' (int)
 
@@ -35,25 +35,25 @@ ${\color{lightgreen}Function \space Output:}$ total number of games played by 'N
 ```python
 total_tournaments('Name')
 ``` 
-${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
 
-${\color{lightgreen}Function \space Output:}$ total number of tournaments played by 'Name' (int)
+${\color{lightgreen} \texttt{Function Output:}}$ total number of tournaments played by 'Name' (int)
 
 ---
 
 ```python
 fenster_winrate()
 ``` 
-${\color{lightgreen}Function \space Output:}$ overall winrate on the window side (float)
+${\color{lightgreen} \texttt{Function Output:}}$ overall winrate on the window side (float)
 
 ---
 
 ```python
 ranks('Name')
 ``` 
-${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
 
-${\color{lightgreen}Function \space Output:}$ plot of ranks in tournatment of 'Name's team over time, example:
+${\color{lightgreen} \texttt{Function Output:}}$ plot of ranks in tournatment of 'Name's team over time, example:
 
 ![ranks_example](ranks_example.jpg)
 
