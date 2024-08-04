@@ -2,7 +2,7 @@
 
 in stats.ipynb run the code blocks in the sections IMPORTS and INIT
 
-Use the functions (with different input names if you'd like) in the section STATS or make use of the following functions:
+Use the functions (with different names possibly) in the section STATS or make use of the following functions:
 
 ## Use of Functions
 
@@ -10,12 +10,12 @@ Use the functions (with different input names if you'd like) in the section STAT
 winrate_name = winrate('Name')
 ``` 
 
-${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players which can be accessed by
+<span style="color:orange">Name</span> must exactly match (including captilization) one of the names in the array players which can be accessed by
 
 ```python
 players
 ``` 
-${\color{lightgreen} \texttt{Function Output:}}$ (here: winrate_name) list containing:
+${\color{lightgreen}Function \space Output:}$ (here: winrate_name) list containing:
 - dataframe containting teampartners, number of games and wins with them, as well as the resulting winrate playing together
 - dataframe containting opponents, number of games and wins against them, as well as the resulting winrate against them
 - overall winrate of player (float)
@@ -26,40 +26,39 @@ ${\color{lightgreen} \texttt{Function Output:}}$ (here: winrate_name) list conta
 ```python
 total_games('Name')
 ``` 
-${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}Name}$ must exactly match (including captilization) one of the names in the array players 
 
-${\color{lightgreen} \texttt{Function Output:}}$ total number of games played by 'Name' (int)
+${\color{lightgreen}Function \space Output:}$ total number of games played by 'Name' (int)
 
 ---
 
 ```python
 total_tournaments('Name')
 ``` 
-${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
+${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
 
-${\color{lightgreen} \texttt{Function Output:}}$ total number of tournaments played by 'Name' (int)
+${\color{lightgreen}Function \space Output:}$ total number of tournaments played by 'Name' (int)
 
 ---
 
 ```python
 fenster_winrate()
 ``` 
-${\color{lightgreen} \texttt{Function Output:}}$ overall winrate on the window side (float)
+${\color{lightgreen}Function \space Output:}$ overall winrate on the window side (float)
 
 ---
 
 ```python
 ranks('Name')
 ``` 
-${\color{lightblue}\texttt{Name}}$ must exactly match (including captilization) one of the names in the array players 
+${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
 
-${\color{lightgreen} \texttt{Function Output:}}$ plot of ranks in tournatment of 'Name's team over time, example:
+${\color{lightgreen}Function \space Output:}$ plot of ranks in tournatment of 'Name's team over time, example:
 
 ![ranks_example](ranks_example.jpg)
 
-Todo: 
+Functions to document: 
 - winrate_all
 - total_games_all
 - nemesis
 - ultimate_nemesis
-
