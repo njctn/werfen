@@ -313,20 +313,54 @@ def fenster_winrate() -> float:
     print(sum(df['WLt1'])/len(df))
     return
 
+
 # -------------------------------------------------------------------------
 
-# NEMESIS FUNCTION
+# PARTNER FUNCTION
 
 # min_games refers to the minimuim number of games AGAINST a specific opponent
 # *args adds as many optional arguments as desired
-def nemesis(player: str, min_games: int, *args):
+def partner(player: str, min_games: int, *args) -> pd.DataFrame:
     if args:
         # output should not be printed
         output = 0
     else:
         # output should be printed
         output = 1
-    _, opp = winrate(player, 'no_output')
+    temp = winrate(player, 'no_output')
+    partner = temp[0] # get the partner df
+    if partner['Games'].max() < min_games:
+        print(f'{player} does not have sufficient games.')
+        return
+    else:
+        try:
+            partner.drop(partner[partner.Games < min_games].index, inplace = True)
+            partner.reset_index(drop=True, inplace = True)
+            partner.sort_values('Winrate', ascending=False, inplace = True)
+            name = partner.loc[0, 'Name']
+            winrate_partner = partner.loc[0, 'Winrate']
+            games = partner.loc[0, 'Games']
+            if output == 1:
+                print(f'{player}\'s best Partner (min {min_games} games): {name} with a winrate of {winrate_partner} over {games} Games.')
+        except KeyError as e:
+            raise Exception(f'Player {player} has too few games (min_games: {min_games}) probably? {partner}') from e
+    return partner
+
+# -------------------------------------------------------------------------
+
+# NEMESIS FUNCTION
+
+# min_games refers to the minimuim number of games AGAINST a specific opponent
+# *args adds as many optional arguments as desired
+def nemesis(player: str, min_games: int, *args) -> pd.DataFrame:
+    if args:
+        # output should not be printed
+        output = 0
+    else:
+        # output should be printed
+        output = 1
+    temp = winrate(player, 'no_output')
+    opp = temp[1] # get the opponent df
     if opp['Games'].max() < min_games:
         print(f'{player} does not have sufficient games.')
         return
@@ -339,7 +373,7 @@ def nemesis(player: str, min_games: int, *args):
             winrate_opp = opp.loc[0, 'Winrate']
             games = opp.loc[0, 'Games']
             if output == 1:
-                print(f'{player}\'s Nemesis: {name} with a winrate of {winrate_opp} over {games} Games.')
+                print(f'{player}\'s Nemesis (min {min_games} games): {name} with a winrate of {winrate_opp} over {games} Games.')
         except KeyError as e:
             raise Exception(f'Player {player} has too few games (min_games: {min_games}) probably? {opp}') from e
         
@@ -360,6 +394,18 @@ def ultimate_nemesis(min_games: int):
         else:
             print(f'Opp was not a df, instead it is ', type(opp), opp)
     return count 
+
+# -------------------------------------------------------------------------
+
+# DUOS FUNCTION
+
+def duos(min_games: int) -> pd.DataFrame:
+    players_df = players.copy()
+    for player in players_df:
+        
+        
+    
+
 
 # -------------------------------------------------------------------------
 
