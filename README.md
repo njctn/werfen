@@ -35,7 +35,7 @@ ${\color{lightgreen}Function \space Output:}$ total number of games played by 'N
 ```python
 total_tournaments('Name')
 ``` 
-${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}Name}$ must exactly match (including captilization) one of the names in the array players 
 
 ${\color{lightgreen}Function \space Output:}$ total number of tournaments played by 'Name' (int)
 
@@ -49,9 +49,18 @@ ${\color{lightgreen}Function \space Output:}$ overall winrate on the window side
 ---
 
 ```python
+nemesis_name = nemesis('Name', min_games)
+nemesis_name
+``` 
+${\color{lightblue}Name}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}min_games}$ must be an integer number indicating the minimum number of games against an opponent (all opponents with fewer games against ${\color{lightblue}Name}$ will be left out)
+${\color{lightblue}nemesis_name}$ is a variable that can be named anthing you like. In order to show the dataframe (table) with all oppontents (with more than min_games), it needs to be called in a new line as shown above.
+---
+
+```python
 ranks('Name')
 ``` 
-${\color{orange}Name}$ must exactly match (including captilization) one of the names in the array players 
+${\color{lightblue}Name}$ must exactly match (including captilization) one of the names in the array players 
 
 ${\color{lightgreen}Function \space Output:}$ plot of ranks in tournatment of 'Name's team over time, example:
 
